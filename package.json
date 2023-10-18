@@ -46,7 +46,8 @@
     "up": "taze major -I"
   },
   "dependencies": {
-    "@codemirror/view": "^6.21.3"
+    "@codemirror/view": "^6.21.3",
+    "csstype": "^3.1.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.27",
