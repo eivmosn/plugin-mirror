@@ -45,17 +45,17 @@
     "prepare": "simple-git-hooks",
     "up": "taze major -I"
   },
+  "dependencies": {
+    "@codemirror/view": "^6.21.3"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "1.0.0-beta.27",
-    "@antfu/ni": "^0.21.8",
-    "@antfu/utils": "^0.7.6",
     "@types/node": "^20.8.7",
     "bumpp": "^9.2.0",
     "eslint": "^8.51.0",
     "esno": "^0.17.0",
     "lint-staged": "^14.0.1",
     "pnpm": "^8.9.2",
-    "rimraf": "^5.0.5",
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
