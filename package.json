@@ -46,6 +46,9 @@
     "up": "taze major -I"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^6.10.2",
+    "@codemirror/language": "^6.9.1",
+    "@codemirror/state": "^6.3.1",
     "@codemirror/view": "^6.21.3",
     "csstype": "^3.1.2"
   },
