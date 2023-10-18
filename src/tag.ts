@@ -7,10 +7,21 @@ import {
   EditorView,
   MatchDecorator,
   ViewPlugin,
-
   WidgetType,
 } from '@codemirror/view'
 import type * as CSS from 'csstype'
+
+export function toKebab(input: string) {
+  let output = ''
+  for (let i = 0, char = ''; i < input.length; i++) {
+    char = input.charAt(i)
+    if (char >= 'A' && char <= 'Z')
+      output += `-${char.toLowerCase()}`
+    else
+      output += char
+  }
+  return output
+}
 
 export class TagWidget extends WidgetType {
   text: string | undefined
@@ -27,8 +38,15 @@ export class TagWidget extends WidgetType {
     return this.text === widget.text
   }
 
-  defaultStyle(): CSS.Properties {
-    return {
+  toString(style: CSS.Properties) {
+    return Object.entries(style).map(([k, v]) => `${toKebab(k)}:${v}`).join(';')
+  }
+
+  toDOM() {
+    const span = document.createElement('span')
+    if (!this.text)
+      return span
+    span.style.cssText = this.toString({
       border: '1px solid #91caff',
       borderRadius: '4px',
       lineHeight: '20px',
@@ -37,18 +55,8 @@ export class TagWidget extends WidgetType {
       fontSize: '12px',
       padding: '2px 7px',
       userSelect: 'none',
-    }
-  }
-
-  toString(style: CSS.Properties) {
-    return Object.entries(style).map(([k, v]) => `${k}:${v}`).join(';')
-  }
-
-  toDOM() {
-    const span = document.createElement('span')
-    if (!this.text)
-      return span
-    span.style.cssText = this.style ? this.toString(this.style) : this.toString(this.defaultStyle())
+      ...this.style,
+    })
     span.textContent = this.text
     return span
   }
