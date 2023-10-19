@@ -12,7 +12,7 @@ export type CompletionItem = Record<string, unknown>
 
 export function getAllKeys(obj: any, key: string): any {
   if (!obj || typeof obj !== 'object')
-    return [] // 如果对象为空或不是对象，返回空数组
+    return []
 
   const keys = []
 
@@ -30,28 +30,45 @@ export function getAllKeys(obj: any, key: string): any {
 }
 
 export function completion(context: CompletionContext, item: CompletionItem): CompletionResult | null {
-  const word = context.matchBefore(/.*/)
+  const tree = syntaxTree(context.state)
+  const treeNode = tree.resolveInner(context.pos, -1).node
+  // console.log(item, treeNode.name, )
+  const expression = treeNode.parent?.getChild('Expression')
+  const name = context.state.sliceDoc(expression?.from, expression?.to)
+  console.log(name, expression?.name)
   console.log(item)
-  if (word) {
-    const before = word.text[word.to - 2]
-    const current = word.text[word.to - 1]
-    if ((before && before !== '.') && current === '.') {
-      const matcher = word.text.match(/([^.]*)\.$/)
-      if (matcher) {
-        const lastSegment = matcher[1]
-        console.log(getAllKeys(item, lastSegment))
-      }
-      return {
-        from: context.pos,
-        options: [
-          {
-            label: 'ttt',
-            type: 'variable',
-          },
-        ],
-      }
-    }
-  }
+  // const text = context.state.doc.toString()
+  // console.log(Parser.parse(text, { ecmaVersion: 2020, sourceType: 'module' }))
+  // console.log(item)
+
+  // node.name === 'VariableName'
+  // console.log(item);
+  // if (node.name === '.') {
+  //   console.log(item)
+  //   console.log(node.parent?.name)
+  //   const obj = node.toTree()
+  //   console.log(obj)
+  // }
+
+  // const before = word.text[word.to - 2]
+  // const current = word.text[word.to - 1]
+  // if ((before && before !== '.') && current === '.') {
+  //   const matcher = word.text.match(/([^.]*)\.$/)
+  //   if (matcher) {
+  //     const lastSegment = matcher[1]
+  //     console.log(getAllKeys(item, lastSegment))
+  //   }
+  //   return {
+  //     from: context.pos,
+  //     options: [
+  //       {
+  //         label: 'ttt',
+  //         type: 'variable',
+  //       },
+  //     ],
+  //   }
+  // }
+
   return null
 }
 
