@@ -1,7 +1,7 @@
 {
   "name": "plugin-mirror",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packageManager": "pnpm@8.8.0",
   "description": "codemirror plugins",
   "author": "eivmosn <eivmosn@163.com>",
@@ -50,6 +50,7 @@
     "@codemirror/language": "^6.9.1",
     "@codemirror/state": "^6.3.1",
     "@codemirror/view": "^6.21.3",
+    "@eivmosn/utils": "^1.0.4",
     "csstype": "^3.1.2"
   },
   "devDependencies": {
