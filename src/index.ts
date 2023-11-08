@@ -1,4 +1,6 @@
 export { color } from './color'
 export { tag } from './tag'
 export { insertText } from './insert'
-export { basic } from './basic'
+export { gutter } from './gutter'
+export { autocomplete } from './autocomplete'
+export { keymapTab } from './keymap'
