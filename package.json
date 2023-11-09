@@ -52,17 +52,16 @@
     "@codemirror/language": "^6.9.1",
     "@codemirror/search": "^6.5.4",
     "@codemirror/state": "^6.3.1",
-    "@codemirror/view": "^6.21.3",
-    "@eivmosn/utils": "^1.0.4",
-    "csstype": "^3.1.2"
+    "@codemirror/view": "^6.22.0",
+    "@eivmosn/utils": "^1.0.6"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "1.0.0-beta.27",
-    "@types/node": "^20.8.7",
+    "@antfu/eslint-config": "1.1.0",
+    "@types/node": "^20.9.0",
     "bumpp": "^9.2.0",
-    "eslint": "^8.51.0",
+    "eslint": "^8.53.0",
     "esno": "^0.17.0",
-    "lint-staged": "^14.0.1",
+    "lint-staged": "^15.0.2",
     "pnpm": "^8.9.2",
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
