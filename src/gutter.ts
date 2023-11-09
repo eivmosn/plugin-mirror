@@ -65,12 +65,12 @@ export function gutter(): Extension[] {
   return [
     foldGutter({
       markerDOM: (collapse) => {
-        const opend = createDivWithClass('cm-gutterIcon opend')
+        const open = createDivWithClass('cm-gutterIcon open')
         const closed = createDivWithClass('cm-gutterIcon closed')
         const { right, down } = createIcon()
-        opend.appendChild(down)
+        open.appendChild(down)
         closed.appendChild(right)
-        return collapse ? opend : closed
+        return collapse ? open : closed
       },
     }),
     EditorView.theme({
@@ -82,11 +82,11 @@ export function gutter(): Extension[] {
       '.cm-gutterIcon': {
         paddingRight: '3px',
       },
-      '.cm-gutters:hover .cm-gutterIcon.opend': {
+      '.cm-gutters:hover .cm-gutterIcon.open': {
         opacity: 1,
         transition: 'opacity 0.2s ease-in',
       },
-      '.cm-gutterIcon.opend': {
+      '.cm-gutterIcon.open': {
         opacity: 0,
         transition: 'opacity 0.2s ease-out',
       },
