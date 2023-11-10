@@ -61,7 +61,7 @@ function createDivWithClass(className: string) {
   return div
 };
 
-export function gutter(): Extension[] {
+export function gutter(): Extension {
   return [
     foldGutter({
       markerDOM: (collapse) => {

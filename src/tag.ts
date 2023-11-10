@@ -9,7 +9,6 @@ import {
   ViewPlugin,
   WidgetType,
 } from '@codemirror/view'
-import type * as CSS from 'csstype'
 
 export function toKebab(input: string) {
   let output = ''
@@ -25,8 +24,8 @@ export function toKebab(input: string) {
 
 export class TagWidget extends WidgetType {
   text: string | undefined
-  style: CSS.Properties | undefined
-  constructor(text: string, style?: CSS.Properties) {
+  style: Record<string, string | number> | undefined
+  constructor(text: string, style?: Record<string, string | number>) {
     super()
     if (text)
       this.text = text
@@ -38,7 +37,7 @@ export class TagWidget extends WidgetType {
     return this.text === widget.text
   }
 
-  toString(style: CSS.Properties) {
+  toString(style: Record<string, string | number>) {
     return Object.entries(style).map(([k, v]) => `${toKebab(k)}:${v}`).join(';')
   }
 
@@ -66,7 +65,7 @@ export class TagWidget extends WidgetType {
   }
 }
 
-export function tag(regexp?: RegExp, style?: CSS.Properties) {
+export function tag(regexp?: RegExp, style?: Record<string, string | number>) {
   const tagMatcher = new MatchDecorator({
     regexp: regexp || /\$\{(.+?)\}/g,
     decoration: (match) => {
