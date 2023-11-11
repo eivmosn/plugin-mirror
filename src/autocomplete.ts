@@ -2,13 +2,15 @@ import { completionPath, javascriptLanguage } from '@codemirror/lang-javascript'
 import type { Extension } from '@codemirror/state'
 import type { CompletionContext } from '@codemirror/autocomplete'
 import type { MaybeObject } from '@eivmosn/utils'
+import { objectKeys } from '@eivmosn/utils'
 import { EditorView } from '@codemirror/view'
 
 const Identifier = /^[\w$\xA1-\uFFFF][\w$\d\xA1-\uFFFF]*$/
 const VueIdentifier = /^__\w+__$/
 const PrototypeIdentifier = /(propertyIsEnumerable|valueOf|constructor|hasOwnProperty|isPrototypeOf|toString|toLocaleString)/
 
-const IconSet = {
+const Icons = {
+  function: 'ƒ',
   method: 'ƒ',
   class: '○',
   interface: '◌',
@@ -76,45 +78,27 @@ function scopeCompletionSource(scope: MaybeObject) {
   }
 }
 
+function styles(icon?: Partial<typeof Icons>) {
+  return Object.fromEntries(
+    objectKeys(Icons).map(key => [
+      `.cm-completionIcon-${key}`,
+      {
+        '&:after': {
+          content: `'${icon?.[key] || Icons[key]}' !important`,
+        },
+      },
+    ]),
+  )
+}
+
 export function autocomplete(override?: Partial<{
   source: MaybeObject
-  icon: Partial<typeof IconSet>
+  icon: Partial<typeof Icons>
 }>): Extension {
   return [
     javascriptLanguage.data.of({
       autocomplete: scopeCompletionSource(Object.assign(globalThis, override?.source)),
     }),
-    EditorView.baseTheme({
-      '.cm-completionIcon-function, .cm-completionIcon-method': {
-        '&:after': { content: `'${override?.icon?.method || IconSet.method}' !important` },
-      },
-      '.cm-completionIcon-class': {
-        '&:after': { content: `'${override?.icon?.class || IconSet.class}' !important` },
-      },
-      '.cm-completionIcon-interface': {
-        '&:after': { content: `'${override?.icon?.interface || IconSet.interface}' !important` },
-      },
-      '.cm-completionIcon-variable': {
-        '&:after': { content: `'${override?.icon?.variable || IconSet.variable}' !important` },
-      },
-      '.cm-completionIcon-constant': {
-        '&:after': { content: `'${override?.icon?.constant || IconSet.constant}' !important` },
-      },
-      '.cm-completionIcon-type': {
-        '&:after': { content: `'${override?.icon?.type || IconSet.type}' !important` },
-      },
-      '.cm-completionIcon-enum': {
-        '&:after': { content: `'${override?.icon?.enum || IconSet.enum}' !important` },
-      },
-      '.cm-completionIcon-property': {
-        '&:after': { content: `'${override?.icon?.property || IconSet.property}' !important` },
-      },
-      '.cm-completionIcon-keyword': {
-        '&:after': { content: `'${override?.icon?.keyword || IconSet.keyword}' !important` },
-      },
-      '.cm-completionIcon-namespace': {
-        '&:after': { content: `'${override?.icon?.namespace || IconSet.namespace}' !important` },
-      },
-    }),
+    EditorView.baseTheme(styles(override?.icon)),
   ]
 }
